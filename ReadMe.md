@@ -123,7 +123,7 @@ In slack you have to address the slack-bot user and then send commands that are 
 
 # Open Issues (TODOs)
 
-* Publish the project on GitHub, share it with the students
+* ~~Publish the project on GitHub, share it with the students~~
 * Write a nice configuration/settings file, so one can handle the parameters in a more readable and extendable way! Also possible to use JSON based configuration file in combinatiion with generating parameters...
 * Make more user friendly; add more "help features"
 * Make the application more testable (more refactoring)
