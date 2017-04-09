@@ -1,1 +1,1 @@
-modules.exports = require('src/SlackBotListener')
+module.exports = require('./src/SlackBotListener')
