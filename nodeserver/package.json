@@ -1,19 +1,19 @@
 {
   "name": "SlackBotListener",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start.dev": "nodemon index.js",
-    "lint": "standard --fix"
+    "start.dev": "node_modules/nodemon/bin/nodemon.js index.js ",
+    "lint": "node_modules/standard/bin/cmd.js --fix"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@slack/client": "^3.6.1",
-    "web3": "^0.17.0-beta",
+    "config": "^1.25.1",
+    "json-rpc2": "^1.0.2",
     "nodemailer": "^2.0",
-    "json-rpc2": "^1.0.2"
+    "nodemon": "^1.11.0",
+    "standard": "^10.0.1",
+    "web3": "^0.17.0-beta"
   }
 }

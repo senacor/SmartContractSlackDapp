@@ -1,0 +1,34 @@
+{
+  "mail": {
+    "address": "EMAIL_ADR",
+    "password": "EMAIL_PWD",
+    "uname": "EMAIL_UNAME"
+  },
+  "contract": {
+    "address": "CONTRACT_ADR"
+  },
+  "init": {
+    "account": {
+      "money": "INIT_ACCOUNT_MONEY"
+    }
+  },
+  "network": {
+    "id": "NETWORK_ID"
+  },
+  "admin": {
+    "userid": "ADMIN_USERID",
+    "account": {
+      "address": "ADMIN_ACCOUNT_ADR",
+      "password": "ADMIN_ACCOUNT_PWD"
+    }
+  },
+  "slack": {
+    "bot": {
+      "token": "SLACK_BOT_TOKEN",
+      "name": "SLACK_BOT_NAME"
+    }
+  },
+  "account": {
+    "folder": "ACCOUNT_FOLDER"
+  }
+}
