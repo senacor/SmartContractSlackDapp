@@ -10,9 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slack/client": "^3.6.1",
-    "web3": "^0.17.0-beta",
-    "nodemailer": "^2.0",
-    "json-rpc2": "^1.0.2"
+    "@slack/client": "3.6.x",
+    "web3": "0.17.x",
+    "nodemailer": "2.x",
+    "json-rpc2": "1.0.x"
+  },
+  "engine": {
+    "node": ">6.9.x"
   }
 }
