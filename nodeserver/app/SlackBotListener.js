@@ -1,3 +1,6 @@
+// load config
+require('dotenv').config()
+
 //define slackclient
 var RtmClient = require('@slack/client').RtmClient;
 var MessageProcessor = require('./SlackMessageProcessor');

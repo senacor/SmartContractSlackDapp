@@ -13,7 +13,8 @@
     "@slack/client": "3.9.x",
     "web3": "0.18.x",
     "nodemailer": "4.0.x",
-    "json-rpc2": "1.0.x"
+    "json-rpc2": "1.0.x",
+    "dotenv": "4.0.x"
   },
   "engine": {
     "node": ">6.9.x"
