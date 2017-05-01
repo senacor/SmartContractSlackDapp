@@ -14,28 +14,28 @@ EthereumAccountStore.prototype.storeLoadedAccountInfoInMemory = function(account
 	var accountAdr = accountInfo.accountAdr;
 	this.addressToUserId[accountAdr] = userId;
 	this.userStore[userId] = accountInfo;
-}
+};
 
 EthereumAccountStore.prototype.storeAccountInfoInMemory = function(userId, userName, accountAdr, accountPwd) {
 	var curAccountInfo = new AccountInfo(userId, userName, accountAdr, accountPwd);
 	this.addressToUserId[accountAdr] = userId;
 	this.userStore[userId] = curAccountInfo;
-}
+};
 
 EthereumAccountStore.prototype.getAccountInfoByUserId = function(userId) {
 	return this.userStore[userId];
-}
+};
 
 EthereumAccountStore.prototype.getAddressToUserIdMap = function() {
 	return this.addressToUserId;
-}
+};
 
 
 EthereumAccountStore.prototype.storeAccountInfoInFileSystem = function(userId, userName, accountAdr, accountPwd) {
   console.log("account log path: " + this.accountFolder + 'accounts.log');
   var curAccountInfo = new AccountInfo(userId, userName, accountAdr, accountPwd);
   fs.appendFileSync(this.accountFolder + 'accounts.log', JSON.stringify(curAccountInfo) + '\n\n');
-}
+};
 
 EthereumAccountStore.prototype.loadAccountInfoInFromSystem = function() {
   	console.log("account log path: " + this.accountFolder + 'accounts.log');
@@ -54,9 +54,9 @@ EthereumAccountStore.prototype.loadAccountInfoInFromSystem = function() {
 		  		var loadedAccount = JSON.parse(line);
 		  		console.log('Loaded Account: ' + loadedAccount);
 		  		// check if the account was loaded properly!
-		  		if (loadedAccount.userId == undefined 
-		  			|| loadedAccount.accountAdr == undefined 
-		  			|| loadedAccount.accountPwd == undefined) {
+		  		if (loadedAccount.userId === undefined
+		  			|| loadedAccount.accountAdr === undefined
+		  			|| loadedAccount.accountPwd === undefined) {
 		  			throw "Could not load user account properly, could not read userID!";
 		  		}
 		  		self.storeLoadedAccountInfoInMemory(loadedAccount);
@@ -65,8 +65,8 @@ EthereumAccountStore.prototype.loadAccountInfoInFromSystem = function() {
 		  	}
 		 }
 	});
-  
-}
+
+};
 
 
 module.exports = EthereumAccountStore;

@@ -1,8 +1,6 @@
 var EthereumAccountAdapter = require('./EthereumAccountAdapter');
 var EthereumLotteryAdapter = require('./EthereumLotteryAdapter');
 
-var adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
-var adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
 var adminUserId = process.env.ADMIN_USERID;
 
 var createAccountEnabled = false;
@@ -17,22 +15,22 @@ function SlackMessageProcessor() {
 
 var isTextInMessage = function(text, message) {
 	return message.indexOf(text) >= 0;
-}
+};
 
 var extracMessageWithoutUser = function(message) {
   var rawText = message.text;
   return rawText.substring(rawText.indexOf('>') + 1, rawText.length).trim().toLowerCase()
-}
+};
 
 var processMessage = function (message) {
 	var messageInfo = {};
   var noUserText = extracMessageWithoutUser(message);
-  
+
   var text = noUserText;
   var parameters;
 
   // extract parameters
-  if (isTextInMessage('{', noUserText) 
+  if (isTextInMessage('{', noUserText)
     && isTextInMessage('}', noUserText)) {
     text = noUserText.substring(0, noUserText.indexOf('{')).trim();
     parameters = noUserText.substring(noUserText.indexOf('{') + 1, noUserText.indexOf('}')).trim().split(',');
@@ -42,7 +40,7 @@ var processMessage = function (message) {
   messageInfo.params = parameters;
 
 	return messageInfo;
-}
+};
 
 var checkAccountInfo = function(userNotify) {
   if (userNotify.accountInfo === undefined) {
@@ -50,16 +48,16 @@ var checkAccountInfo = function(userNotify) {
     return false;
   }
   return true;
-}
+};
 
 var checkAdmin = function(userNotify) {
-  if (userNotify.userId != adminUserId) {
+  if (userNotify.userId !== adminUserId) {
       var command = userNotify.command;
       userNotify.notifyUser("The command '" + command + "' can only be executed by the admin!");
       return false;
-  } 
+  }
   return true;
-}
+};
 
 var checkForSwearing = function(mText, userNotify) {
   for (var i = 0; i < swearArr.length; i++) {
@@ -67,21 +65,21 @@ var checkForSwearing = function(mText, userNotify) {
       userNotify.notifyUser('Stop swearing or I will tell your mom!');
     }
   }
-}
+};
 
 var checkParams = function(userNotify, count) {
   var paramArr = userNotify.commandParams;
-  if (paramArr.length != count) {
+  if (paramArr.length !== count) {
     userNotify.notifyUser('Only exactly' + count + ' parameters allowed for ' + command);
     return false;
   }
   return true;
-}
+};
 
 SlackMessageProcessor.prototype.processSlackBotMessage = function (message, userNotify) {
 
   var userId = userNotify.userId;
-  
+
   var procMessage = processMessage(message);
   var mText = procMessage.text;
   var mParams = procMessage.params;
@@ -93,11 +91,11 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
   var accountInfo = this.accountAdapter.getAccountInfoByUserId(userId);
 
   // if user informaiton is available store it in the notification object
-  if (accountInfo !== undefined 
-    && accountInfo != null) {
+  if (accountInfo !== undefined
+    && accountInfo !== null) {
     userNotify.setAccountInfo(accountInfo);
   }
- 
+
   var addressToUserIdMap = this.accountAdapter.getAddressToUserIdMap();
   if (addressToUserIdMap !== undefined) {
     userNotify.setAddressToUserIdMap(addressToUserIdMap);
@@ -126,8 +124,8 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
   		return;
 
     case 'account info':
-    case 'my account info': 
-    case 'my account': 
+    case 'my account info':
+    case 'my account':
     case 'account':
       if (checkAccountInfo(userNotify)) {
         userNotify.notifyUser('Your account address is: ' + accountInfo.accountAdr);
@@ -179,7 +177,7 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
     case 'reset':
     case 'reset lottery':
-      if (checkAdmin(userNotify) 
+      if (checkAdmin(userNotify)
         && checkParams(userNotify, 2)) {
 
         var minAmount = mParams[0];
@@ -187,7 +185,7 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
         this.lotteryAdapter.resetLottery(minAmount, initAmount, userNotify);
       }
-      return;  
+      return;
 
     case 'current lottery':
     case 'current lotter address':
@@ -208,7 +206,7 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
         this.lotteryAdapter.endLottery(userNotify);
       }
       return;
-  	
+
     case 'who is the winner?':
     case 'who is the winner':
     case 'who won?':
@@ -234,7 +232,7 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
     case 'pot':
     case 'current pot':
-      this.lotteryAdapter.getPot(userNotify)
+      this.lotteryAdapter.getPot(userNotify);
       return;
 
     case 'help':

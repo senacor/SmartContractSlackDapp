@@ -54,43 +54,43 @@ function EthereumLotteryAdapter() {
   		var userId = addressToUserId[address];
 
 	});
-	
+
 }*/
 
 var checkLotteryInitialized = function(userNotify) {
-	if (lottery == undefined || lottery == null) {
+	if (lottery === undefined || lottery === null) {
 		userNotify.notifyUser("LOTTERY NOT DEFINED! Admin has to call 'set lottery {LOTTERY_CONTRACT_ADDRESS}' command");
 		throw "Waiting for admin to set lottery...";
 	}
-}
+};
 
 var checkAdmin = function(userNotify) {
 	var userId = userNotify.userId;
-	if (userId != adminUserId) {
+	if (userId !== adminUserId) {
 		userNotify.notifyUser("You have to be admin to execute the " + userNotify.command + "command");
 		throw "You have to be admin to execute the " + userNotify.command + " command.";
 	}
-}
+};
 
 var checkSufficientFunds = function(adr, atLeastAmount, userNotify) {
 	var balance = web3.eth.getBalance(adr);
 
 	if (parseInt(balance) < atLeastAmount) {
 		if (userNotify !== undefined) {
-			userNotify.notifyUser("You don't have enough funds to " + userNotify.command + 
+			userNotify.notifyUser("You don't have enough funds to " + userNotify.command +
 				". You need at least " + web3.fromWei(minParticipationAmount) + "Ether");
 		}
 		throw "Insufficient funds to do transaction!";
 	}
-}
+};
 
 var convertWeiToEther = function(weiAmount) {
 	return web3.fromWei(parseInt(weiAmount));
-}
+};
 
 var getAccountBalance = function(userInfo) {
 	return web3.eth.getBalance(userInfo.accountAdr);
-}
+};
 
 EthereumLotteryAdapter.prototype.setLotteryAddress = function(_lotteryAddress, userNotify) {
 	lotteryContractAdr = _lotteryAddress;
@@ -103,11 +103,11 @@ EthereumLotteryAdapter.prototype.setLotteryAddress = function(_lotteryAddress, u
 	}
 
 	userNotify.notifyUser("");
-}
+};
 
 EthereumLotteryAdapter.prototype.getLotteryAddress = function() {
 	return lotteryContractAdr;
-}
+};
 
 // NOT IMPLEMENTED YET, lottery contract creation has to be done by hand at the moment!
 EthereumLotteryAdapter.prototype.newLottery = function(userNotify) {
@@ -115,8 +115,8 @@ EthereumLotteryAdapter.prototype.newLottery = function(userNotify) {
 	checkAdmin(userNotify);
 
 	throw "<@" + userNotify.userId + ">: NOT IMPLEMENTED YET: Creating a new lottery is not implemented at the moment! " +
-		"You have to deploy by hand through the ethereum client!";	
-}
+		"You have to deploy by hand through the ethereum client!";
+};
 
 EthereumLotteryAdapter.prototype.resetLottery = function(minParticipationAmount, initialMoneyAmount, userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -125,7 +125,7 @@ EthereumLotteryAdapter.prototype.resetLottery = function(minParticipationAmount,
 	unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
 	var transNo = lottery.resetLottery.sendTransaction(minParticipationAmount, {from: adminAccountAddress, value: initialMoneyAmount});
 	userNotify.notifyUser("Lottery reset, transaction number: " + transNo);
-}
+};
 
 EthereumLotteryAdapter.prototype.placeBets = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -138,7 +138,7 @@ EthereumLotteryAdapter.prototype.placeBets = function(userNotify) {
 	// remember the address
 	userNotify.addressToUserId[userAccount.accountAdr] = userAccount.userId;
 	userNotify.notifyUser("The transaction to place your bets was initiated, transaction number: " + transNo);
-}
+};
 
 EthereumLotteryAdapter.prototype.endLottery = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -147,9 +147,9 @@ EthereumLotteryAdapter.prototype.endLottery = function(userNotify) {
 	unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
 	var transNo = lottery.endLottery.sendTransaction(0, {from: adminAccountAddress});
 	userNotify.notifyUser("GOOD NEWS EVERYONE! The transaction to end the " +
-		"lottery and determine the winner was initiated, transaction number: " + transNo, 
+		"lottery and determine the winner was initiated, transaction number: " + transNo,
 		'no_user');
-}
+};
 
 EthereumLotteryAdapter.prototype.transferPotToWinner = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -157,7 +157,7 @@ EthereumLotteryAdapter.prototype.transferPotToWinner = function(userNotify) {
 	var winner = lottery.getWinner.call();
 	var winnerUserId = userNotify.addressToUserId[winner];
 
-	if (winnerUserId != userNotify.userId) {
+	if (winnerUserId !== userNotify.userId) {
 		userNotify.notifyUser("Eeeey, you are not the winner, no money for you!");
 		return;
 	}
@@ -166,7 +166,7 @@ EthereumLotteryAdapter.prototype.transferPotToWinner = function(userNotify) {
 	unlockEthereumAccount(userAccount.accountAdr, userAccount.accountPwd, 1200);
 	var transNo = lottery.transferPotToWinner.sendTransaction(0, {from: userAccount.accountAdr});
 	userNotify.notifyUser("The winner took the funds! </lottery> ");
-}
+};
 
 EthereumLotteryAdapter.prototype.getWinner = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -181,7 +181,7 @@ EthereumLotteryAdapter.prototype.getWinner = function(userNotify) {
 	userNotify.notifyUser("THE WINNER-ADDRESS IS: " + winnerAdr, 'no_user');
 	userNotify.notifyUser("You transmit the winning-pot to your account by executing the 'gimme my money' command!", winnerUserId);
 	userNotify.notifyUser("Hey, its me again. Just wanted to tell you that 'withdraw' also works, but I personally like 'gimme my money' better.", winnerUserId);
-}
+};
 
 EthereumLotteryAdapter.prototype.getPot = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -190,7 +190,7 @@ EthereumLotteryAdapter.prototype.getPot = function(userNotify) {
 	var currentPotInEther = web3.fromWei(currentPot);
 
 	userNotify.notifyUser("The lottery's current pot is at: " + currentPotInEther + " Ether");
-}
+};
 
 EthereumLotteryAdapter.prototype.getParticipants = function(userNotify) {
 	checkLotteryInitialized(userNotify);
@@ -213,11 +213,11 @@ EthereumLotteryAdapter.prototype.getParticipants = function(userNotify) {
 	}
 
 	//userNotify.notifyUser(message);
-}
+};
 
 var unlockEthereumAccount = function(adr, pwd, timeInSeconds) {
   return web3.personal.unlockAccount(adr, pwd, timeInSeconds);
-}
+};
 
 
 module.exports = EthereumLotteryAdapter;
