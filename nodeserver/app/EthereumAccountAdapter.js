@@ -50,7 +50,7 @@ function EthereumAccountAdapter() {
 * creates new account and returns the account information.
 */
 EthereumAccountAdapter.prototype.createNewAccount = function(userNotify) {
-	if (this.getAccountInfoByUserId(userNotify.userId) != undefined) {
+	if (this.getAccountInfoByUserId(userNotify.userId) !== undefined) {
 		userNotify.notifyUser("You are already registered! What are you trying to pull?");
 		return;
 	}
@@ -110,7 +110,7 @@ var newEthereumAccount = function(_userNotify) {
 
   rpcClient.call("personal_newAccount", [pwdNewAccount], function(err,result) {
     try {
-	    if (err != null) {
+	    if (err !== null) {
 	      console.log('ERROR', err);
 	       throw "Ethereum account creation failed, there was a problem with the Ethereum client.";
 	    }
@@ -172,13 +172,13 @@ EthereumAccountAdapter.prototype.cleanup = function(removeMinAccounts, userNotif
 
         //console.log(accountNr.substring(2, accountNr.length))
 
-        if (accountNr != null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0) {
+        if (accountNr !== null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0) {
           var accountBalance = web3.eth.getBalance(accountNr);
 
           //console.log('account = ' + accountNr + ", balance = " + accountBalance);
           //console.log('file path = ' + process.env.ACCOUNT_PATH);
 
-          if (accountBalance == 0 || (removeMinAccounts && accountBalance == parseInt(process.env.INIT_ACCOUNT_MONEY))) {
+          if (accountBalance === 0 || (removeMinAccounts && accountBalance === parseInt(process.env.INIT_ACCOUNT_MONEY))) {
             console.log("delete empty account: " + accountFolder + file);
             fs.unlinkSync(accountFolder + file);
           }

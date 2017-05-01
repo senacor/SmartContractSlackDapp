@@ -58,7 +58,7 @@ slack.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
         messageProcessorInst.processSlackBotMessage(message, userNotify);
       }
     }
-    if (message.subtype && message.subtype == "channel_join") {
+    if (message.subtype && message.subtype === "channel_join") {
         //slack.sendMessage('<@'+ message.user +'>, please execute the  ', message.channel);
     }
     console.log('Message:', message);

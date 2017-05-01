@@ -58,7 +58,7 @@ function EthereumLotteryAdapter() {
 }*/
 
 var checkLotteryInitialized = function(userNotify) {
-	if (lottery == undefined || lottery == null) {
+	if (lottery === undefined || lottery === null) {
 		userNotify.notifyUser("LOTTERY NOT DEFINED! Admin has to call 'set lottery {LOTTERY_CONTRACT_ADDRESS}' command");
 		throw "Waiting for admin to set lottery...";
 	}
@@ -66,7 +66,7 @@ var checkLotteryInitialized = function(userNotify) {
 
 var checkAdmin = function(userNotify) {
 	var userId = userNotify.userId;
-	if (userId != adminUserId) {
+	if (userId !== adminUserId) {
 		userNotify.notifyUser("You have to be admin to execute the " + userNotify.command + "command");
 		throw "You have to be admin to execute the " + userNotify.command + " command.";
 	}
@@ -157,7 +157,7 @@ EthereumLotteryAdapter.prototype.transferPotToWinner = function(userNotify) {
 	var winner = lottery.getWinner.call();
 	var winnerUserId = userNotify.addressToUserId[winner];
 
-	if (winnerUserId != userNotify.userId) {
+	if (winnerUserId !== userNotify.userId) {
 		userNotify.notifyUser("Eeeey, you are not the winner, no money for you!");
 		return;
 	}

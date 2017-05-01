@@ -51,7 +51,7 @@ var checkAccountInfo = function(userNotify) {
 };
 
 var checkAdmin = function(userNotify) {
-  if (userNotify.userId != adminUserId) {
+  if (userNotify.userId !== adminUserId) {
       var command = userNotify.command;
       userNotify.notifyUser("The command '" + command + "' can only be executed by the admin!");
       return false;
@@ -69,7 +69,7 @@ var checkForSwearing = function(mText, userNotify) {
 
 var checkParams = function(userNotify, count) {
   var paramArr = userNotify.commandParams;
-  if (paramArr.length != count) {
+  if (paramArr.length !== count) {
     userNotify.notifyUser('Only exactly' + count + ' parameters allowed for ' + command);
     return false;
   }
@@ -92,7 +92,7 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
   // if user informaiton is available store it in the notification object
   if (accountInfo !== undefined
-    && accountInfo != null) {
+    && accountInfo !== null) {
     userNotify.setAccountInfo(accountInfo);
   }
 

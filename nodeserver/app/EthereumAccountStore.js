@@ -54,9 +54,9 @@ EthereumAccountStore.prototype.loadAccountInfoInFromSystem = function() {
 		  		var loadedAccount = JSON.parse(line);
 		  		console.log('Loaded Account: ' + loadedAccount);
 		  		// check if the account was loaded properly!
-		  		if (loadedAccount.userId == undefined
-		  			|| loadedAccount.accountAdr == undefined
-		  			|| loadedAccount.accountPwd == undefined) {
+		  		if (loadedAccount.userId === undefined
+		  			|| loadedAccount.accountAdr === undefined
+		  			|| loadedAccount.accountPwd === undefined) {
 		  			throw "Could not load user account properly, could not read userID!";
 		  		}
 		  		self.storeLoadedAccountInfoInMemory(loadedAccount);

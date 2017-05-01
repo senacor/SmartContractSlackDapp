@@ -23,7 +23,7 @@ SendEmail.prototype.send = function (emailAddressTo, subject, text)
 	    from: '"' + this.senderName + '"<noreply@senacor.com>', // sender address
 	    to: emailAddressTo, // list of receivers
 	    subject: subject, // Subject line
-	    text: text, // plaintext body
+	    text: text // plaintext body
 	};
 
 	console.log("Will send email from: " + this.emailAdr + " to " + emailAddressTo);

@@ -36,19 +36,19 @@ UserNotificationHandler.prototype.setCommandParams = function(_commandParams) {
 UserNotificationHandler.prototype.notifyUser = function(_message, _userId, _channel) {
 
 	var userchannel = this.channel;
-	if (_channel !== undefined && _channel != null) {
+	if (_channel !== undefined && _channel !== null) {
 		userchannel = _channel;
 	}
 
 	var message;
 
-	if (_userId == 'no_user') {
+	if (_userId === 'no_user') {
 		message = _message;
 	}
-	else if (_userId !== undefined || _userId != null) {
+	else if (_userId !== undefined || _userId !== null) {
 		message = '<@'+ _userId +'>: ' + _message;
 	}
-	else if (this.userId !== undefined && this.userId != null) {
+	else if (this.userId !== undefined && this.userId !== null) {
 		message = '<@'+ this.userId +'>: ' + _message;
 	} else {
 		message = _message;

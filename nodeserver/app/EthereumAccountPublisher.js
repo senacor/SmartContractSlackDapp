@@ -86,7 +86,7 @@ var retrieveKeyFileForAccount = function (accountNr) {
   for (i = 0; i < files.length; i++)
   {
     var file = files[i];
-    if (accountNr != null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0)
+    if (accountNr !== null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0)
     {
       return self.accountFolder + '/' + file;
     }
@@ -99,7 +99,7 @@ var retrieveKeyFileForAccount = function (accountNr) {
 var retrieveKeyFileDataForAccount = function (accountNr) {
   var accountFilePath = retrieveKeyFileForAccount(accountNr);
 
-  if (accountFilePath == null) {
+  if (accountFilePath === null) {
     return;
   }
   var fileData = fs.readFileSync(accountFilePath, 'utf8');
