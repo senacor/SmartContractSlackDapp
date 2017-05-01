@@ -1,8 +1,6 @@
 var EthereumAccountAdapter = require('./EthereumAccountAdapter');
 var EthereumLotteryAdapter = require('./EthereumLotteryAdapter');
 
-var adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
-var adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
 var adminUserId = process.env.ADMIN_USERID;
 
 var createAccountEnabled = false;
