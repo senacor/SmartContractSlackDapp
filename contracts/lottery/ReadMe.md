@@ -44,7 +44,7 @@ dapple test file:
 
 	./src/Lottery_test.sol
 
-javascrip test file:
+javascript test file:
 
 	./test/Lottery.js
 
