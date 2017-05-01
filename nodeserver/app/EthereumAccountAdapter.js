@@ -25,7 +25,7 @@ var accountPublisher = new EthereumAccountPublisher();
 //var self;
 
 function EthereumAccountAdapter() {
-	
+
 	//this.initialMoneyAmount = parseInt(process.env.INIT_ACCOUNT_MONEY);
 	//this.adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
 	//this.adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
@@ -37,7 +37,7 @@ function EthereumAccountAdapter() {
 	//self = this;
 
 	// run check if the enviroment variables are checked
-	if (initialMoneyAmount === undefined 
+	if (initialMoneyAmount === undefined
 		|| adminAccountAddress === undefined
 		|| adminAccountPwd === undefined
 		|| accountFolder === undefined) {
@@ -60,15 +60,15 @@ EthereumAccountAdapter.prototype.createNewAccount = function(userNotify) {
 
 EthereumAccountAdapter.prototype.getAccountInfoByUserId = function(userId) {
 	return accountStore.getAccountInfoByUserId(userId);
-}
+};
 
 EthereumAccountAdapter.prototype.loadAccounts = function() {
 	accountStore.loadAccountInfoInFromSystem();
-}
+};
 
 EthereumAccountAdapter.prototype.getAddressToUserIdMap = function() {
 	return accountStore.addressToUserId;
-}
+};
 
 EthereumAccountAdapter.prototype.getAccountBalanceInEtherByUserId = function(userId) {
 	var accountInfo = this.getAccountInfoByUserId(userId);
@@ -89,15 +89,15 @@ EthereumAccountAdapter.prototype.getAccountBalanceInEtherByUserId = function(use
 		return err;
 	}
 
-}
+};
 
 EthereumAccountAdapter.prototype.getAdminBalanceInEther = function() {
 	return web3.fromWei(web3.eth.getBalance(adminAccountAddress));
-}
+};
 
 var generatePassword = function() {
-	return Math.random().toString(36).slice(-8);;
-}
+  return Math.random().toString(36).slice(-8);
+};
 
 var newEthereumAccount = function(_userNotify) {
   var pwdNewAccount = generatePassword();
@@ -108,7 +108,7 @@ var newEthereumAccount = function(_userNotify) {
 
   //console.log(self.adminAccountAddress);
 
-  rpcClient.call("personal_newAccount", [pwdNewAccount], function(err,result) { 
+  rpcClient.call("personal_newAccount", [pwdNewAccount], function(err,result) {
     try {
 	    if (err != null) {
 	      console.log('ERROR', err);
@@ -119,7 +119,7 @@ var newEthereumAccount = function(_userNotify) {
 	    var userId = userNotify.userId;
 	    var userEmail = userNotify.userEmail;
 	    userNotify.notifyUser("Ethereum account created!");
-	    
+
 	    console.log('Account created', accountAdr);
 
 	    //console.log(self.adminAccountAddress);
@@ -141,11 +141,11 @@ var newEthereumAccount = function(_userNotify) {
     }
 
   });
-}
+};
 
 var unlockEthereumAccount = function(accountNr, passphrase, timeInSeconds) {
   return web3.personal.unlockAccount(accountNr, passphrase, timeInSeconds);
-}
+};
 
 
 /**
@@ -163,7 +163,7 @@ EthereumAccountAdapter.prototype.cleanup = function(removeMinAccounts, userNotif
   }
 
   files = fs.readdirSync(accountFolder);
-  
+
   files.forEach(function(file){
       console.log('account file: ', file);
 
@@ -180,7 +180,7 @@ EthereumAccountAdapter.prototype.cleanup = function(removeMinAccounts, userNotif
 
           if (accountBalance == 0 || (removeMinAccounts && accountBalance == parseInt(process.env.INIT_ACCOUNT_MONEY))) {
             console.log("delete empty account: " + accountFolder + file);
-            fs.unlinkSync(accountFolder + file);  
+            fs.unlinkSync(accountFolder + file);
           }
         }
       });
@@ -189,6 +189,6 @@ EthereumAccountAdapter.prototype.cleanup = function(removeMinAccounts, userNotif
     });
 
   userNotify.notifyUser('Accounts cleaned up!');
-}
+};
 
 module.exports = EthereumAccountAdapter;
