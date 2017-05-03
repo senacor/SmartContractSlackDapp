@@ -30,14 +30,14 @@ function EthereumAccountAdapter() {
     || adminAccountPwd === undefined
     || accountFolder === undefined) {
     console.log('## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##');
-  throw "## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##"
-}
+    throw "## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##"
+  }
 }
 
 /*
  * creates new account and returns the account information.
  */
- EthereumAccountAdapter.prototype.createNewAccount = function (userNotify) {
+EthereumAccountAdapter.prototype.createNewAccount = function (userNotify) {
   if (this.getAccountInfoByUserId(userNotify.userId) != undefined) {
     userNotify.notifyUser("You are already registered! What are you trying to pull?");
     return;
@@ -136,7 +136,7 @@ var unlockEthereumAccount = function (accountNr, passphrase, timeInSeconds) {
  This function DOES NOT alter the account store information; if an account creation fails during the server is running
  the user can currently not reset his account!
  **/
- EthereumAccountAdapter.prototype.cleanup = function (removeMinAccounts, userNotify) {
+EthereumAccountAdapter.prototype.cleanup = function (removeMinAccounts, userNotify) {
 
   if (!accountFolder.endsWith('/')) {
     accountFolder += '/';
