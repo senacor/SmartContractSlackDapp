@@ -1,7 +1,8 @@
 {
   "name": "slack",
+  "repository": "https://github.com/senacor/SmartContractSlackDapp.git",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ethereum based smartcontract Dapp to play a lottery via slack",
   "main": "index.js",
   "scripts": {
     "start": "node SlackBotListener.js"
@@ -9,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slack/client": "^3.6.1",
-    "web3": "^0.17.0-beta",
-    "nodemailer": "^2.0",
-    "json-rpc2": "^1.0.2" 
+    "@slack/client": "3.9.x",
+    "web3": "0.18.x",
+    "nodemailer": "4.0.x",
+    "json-rpc2": "1.0.x",
+    "dotenv": "4.0.x"
+  },
+  "engine": {
+    "node": ">6.9.x"
   }
 }

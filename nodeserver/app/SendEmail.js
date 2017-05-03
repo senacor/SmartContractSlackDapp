@@ -9,7 +9,6 @@ function SendEmail(emailAdr, emailPwd, senderName) {
 
 SendEmail.prototype.send = function (emailAddressTo, subject, text)
 {
-	console.log('EmailAdr :', this.emailAdr + " " + this.emailPwd);
 
 	var transporter = nodemailer.createTransport({
 	     service: 'gmail', // no need to set host or port etc.

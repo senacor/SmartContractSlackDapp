@@ -13,10 +13,12 @@ For details please check the Lottery.sol contract file. The contract methods sho
 
 ### The setup
 
-There are 2 test-frameworks set up for testing the lottery contract:
+You need two frameworks setup for testing the lottery contract:
 
-* dapple
+* [dapple](https://github.com/dapphub/dapple)
 * javacsript (mocha + chaithereum)
+
+## Run the tests
 
 To run the dapple tests: 
 
@@ -42,7 +44,7 @@ dapple test file:
 
 	./src/Lottery_test.sol
 
-javascrip test file:
+javascript test file:
 
 	./test/Lottery.js
 

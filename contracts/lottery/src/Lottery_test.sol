@@ -1,5 +1,5 @@
 pragma solidity >= 0.4.5;
-import 'dapple/test.sol';
+import 'dapple/test.sol'; // virtual "dapple" package imported when `dapple test` is run
 import 'Lottery.sol';
 import 'LotteryEventDefinitions.sol';
 

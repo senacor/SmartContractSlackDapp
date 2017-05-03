@@ -1,7 +1,8 @@
 {
-  "name": "adv_ws",
-  "version": "1.0.0",
-  "description": "",
+  "name": "smartcontext-test",
+  "version": "0.0.1",
+  "description": "testing for the smartcontract",
+  "repository": "https://github.com/senacor/SmartContractSlackDapp.git",
   "main": "index.js",
   "scripts": {
     "build":  "node compile.js",
@@ -12,9 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chaithereum": "^2.0.6",
-    "mocha": "^3.2.0",
-    "solc": "^0.4.6",
-    "web3": "^0.17.0-beta"
+    "chaithereum": "2.0.x",
+    "mocha": "3.3.x",
+    "solc": "0.4.x",
+    "web3": "0.18.x"
+  },
+  "engine": {
+    "node": ">6.9.x"
   }
 }
