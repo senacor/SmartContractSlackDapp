@@ -33,7 +33,7 @@ slack.start();
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the 'rtm.start' payload if you want to cache it
 slack.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
-  console.log('Logged in, but not yet connected to a channel');
+  console.log('Connected to the slack-bot, waiting for messages...');
   for (var user_id in slack.dataStore.users) {
     var user = slack.dataStore.users[user_id];
     if (user.name === bot_name) {
@@ -57,7 +57,7 @@ slack.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
         messageProcessorInst.processSlackBotMessage(message, userNotify);
       }
     }
-    
+
     console.log('Message:', message);
     console.log('  >>UserId:', message.user);
     console.log('  >>UserName: ', slack.dataStore.users[message.user].profile.first_name + ' ' + slack.dataStore.users[message.user].profile.last_name);
