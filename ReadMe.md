@@ -92,7 +92,16 @@ Finally to start the server by running:
 	npm start
 
 ### Communication through slack chat
-In slack you have to address the slack-bot user and then send commands that are known to the SlackMessageProcessor class.
+To communicate with the bot invite it to your channel
+
+    /invite @slackbot
+    
+Then you can ask the bot for some valid commands with
+    
+    @slackbot help
+
+For all commands see SlackMessageProcessor class.
+
 
 # Open Issues (TODOs)
 
