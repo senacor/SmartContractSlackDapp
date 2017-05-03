@@ -25,81 +25,82 @@ var accountPublisher = new EthereumAccountPublisher();
 //var self;
 
 function EthereumAccountAdapter() {
-	
-	//this.initialMoneyAmount = parseInt(process.env.INIT_ACCOUNT_MONEY);
-	//this.adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
-	//this.adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
-	//this.accountFolder = process.env.ACCOUNT_FOLDER;
 
-	//this.accountStore = new EthereumAccountStore();
-	//this.accountPublisher = new EthereumAccountPublisher();
+  //this.initialMoneyAmount = parseInt(process.env.INIT_ACCOUNT_MONEY);
+  //this.adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
+  //this.adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
+  //this.accountFolder = process.env.ACCOUNT_FOLDER;
 
-	//self = this;
+  //this.accountStore = new EthereumAccountStore();
+  //this.accountPublisher = new EthereumAccountPublisher();
 
-	// run check if the enviroment variables are checked
-	if (initialMoneyAmount === undefined 
-		|| adminAccountAddress === undefined
-		|| adminAccountPwd === undefined
-		|| accountFolder === undefined) {
-		console.log('## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##');
-		throw "## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##"
-	}
+  //self = this;
+
+  // run check if the enviroment variables are checked
+  if (initialMoneyAmount === undefined
+    || adminAccountAddress === undefined
+    || adminAccountPwd === undefined
+    || accountFolder === undefined) {
+    console.log('## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##');
+    throw "## FATAL ERROR: Environment variable of EthereumAccountAdapter not set! Check the variables! ##"
+  }
 }
 
 /*
-* creates new account and returns the account information.
-*/
-EthereumAccountAdapter.prototype.createNewAccount = function(userNotify) {
-	if (this.getAccountInfoByUserId(userNotify.userId) != undefined) {
-		userNotify.notifyUser("You are already registered! What are you trying to pull?");
-		return;
-	}
+ * creates new account and returns the account information.
+ */
+EthereumAccountAdapter.prototype.createNewAccount = function (userNotify) {
+  if (this.getAccountInfoByUserId(userNotify.userId) != undefined) {
+    userNotify.notifyUser("You are already registered! What are you trying to pull?");
+    return;
+  }
 
-	newEthereumAccount(userNotify);
+  newEthereumAccount(userNotify);
 };
 
-EthereumAccountAdapter.prototype.getAccountInfoByUserId = function(userId) {
-	return accountStore.getAccountInfoByUserId(userId);
+EthereumAccountAdapter.prototype.getAccountInfoByUserId = function (userId) {
+  return accountStore.getAccountInfoByUserId(userId);
 }
 
-EthereumAccountAdapter.prototype.loadAccounts = function() {
-	accountStore.loadAccountInfoInFromSystem();
+EthereumAccountAdapter.prototype.loadAccounts = function () {
+  accountStore.loadAccountInfoInFromSystem();
 }
 
-EthereumAccountAdapter.prototype.getAddressToUserIdMap = function() {
-	return accountStore.addressToUserId;
+EthereumAccountAdapter.prototype.getAddressToUserIdMap = function () {
+  return accountStore.addressToUserId;
 }
 
-EthereumAccountAdapter.prototype.getAccountBalanceInEtherByUserId = function(userId) {
-	var accountInfo = this.getAccountInfoByUserId(userId);
-	if (accountInfo === undefined) {
-		return undefined;
-	}
+EthereumAccountAdapter.prototype.getAccountBalanceInEtherByUserId = function (userId) {
+  var accountInfo = this.getAccountInfoByUserId(userId);
+  if (accountInfo === undefined) {
+    return undefined;
+  }
 
-	var accountAdr = accountInfo.accountAdr;
+  var accountAdr = accountInfo.accountAdr;
 
-	if (accountAdr === undefined) {
-		return undefined;
-	}
+  if (accountAdr === undefined) {
+    return undefined;
+  }
 
-	try {
-		var accountBalance = web3.fromWei(web3.eth.getBalance(accountAdr));
-		return accountBalance;
-	} catch (err) {
-		return err;
-	}
+  try {
+    var accountBalance = web3.fromWei(web3.eth.getBalance(accountAdr));
+    return accountBalance;
+  } catch (err) {
+    return err;
+  }
 
 }
 
-EthereumAccountAdapter.prototype.getAdminBalanceInEther = function() {
-	return web3.fromWei(web3.eth.getBalance(adminAccountAddress));
+EthereumAccountAdapter.prototype.getAdminBalanceInEther = function () {
+  return web3.fromWei(web3.eth.getBalance(adminAccountAddress));
 }
 
-var generatePassword = function() {
-	return Math.random().toString(36).slice(-8);;
+var generatePassword = function () {
+  return Math.random().toString(36).slice(-8);
+  ;
 }
 
-var newEthereumAccount = function(_userNotify) {
+var newEthereumAccount = function (_userNotify) {
   var pwdNewAccount = generatePassword();
   var userNotify = _userNotify;
 
@@ -108,85 +109,85 @@ var newEthereumAccount = function(_userNotify) {
 
   //console.log(self.adminAccountAddress);
 
-  rpcClient.call("personal_newAccount", [pwdNewAccount], function(err,result) { 
+  rpcClient.call("personal_newAccount", [pwdNewAccount], function (err, result) {
     try {
-	    if (err != null) {
-	      console.log('ERROR', err);
-	       throw "Ethereum account creation failed, there was a problem with the Ethereum client.";
-	    }
+      if (err != null) {
+        console.log('ERROR', err);
+        throw "Ethereum account creation failed, there was a problem with the Ethereum client.";
+      }
 
-	    var accountAdr = result;
-	    var userId = userNotify.userId;
-	    var userEmail = userNotify.userEmail;
-	    userNotify.notifyUser("Ethereum account created!");
-	    
-	    console.log('Account created', accountAdr);
+      var accountAdr = result;
+      var userId = userNotify.userId;
+      var userEmail = userNotify.userEmail;
+      userNotify.notifyUser("Ethereum account created!");
 
-	    //console.log(self.adminAccountAddress);
-	    console.log(adminAccountAddress);
+      console.log('Account created', accountAdr);
 
-	    //transact money to account
-	    unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
-	    web3.eth.sendTransaction({from: adminAccountAddress, to: accountAdr, value: initialMoneyAmount, gas: 4000000});
+      //console.log(self.adminAccountAddress);
+      console.log(adminAccountAddress);
 
-	    // remember account information
-	    accountStore.storeAccountInfoInMemory(userId, "Anonymous", accountAdr, pwdNewAccount);
-	    accountStore.storeAccountInfoInFileSystem(userId, "Anonymous", accountAdr, pwdNewAccount);
+      //transact money to account
+      unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
+      web3.eth.sendTransaction({from: adminAccountAddress, to: accountAdr, value: initialMoneyAmount, gas: 4000000});
 
-	    // send newly created account to the user via email (saver than via slack...)
-	    accountPublisher.publishAccountViaEmail(userEmail, accountAdr, pwdNewAccount);
-	    userNotify.notifyUser("The ethereum account was sent to you via email.");
+      // remember account information
+      accountStore.storeAccountInfoInMemory(userId, "Anonymous", accountAdr, pwdNewAccount);
+      accountStore.storeAccountInfoInFileSystem(userId, "Anonymous", accountAdr, pwdNewAccount);
+
+      // send newly created account to the user via email (saver than via slack...)
+      accountPublisher.publishAccountViaEmail(userEmail, accountAdr, pwdNewAccount);
+      userNotify.notifyUser("The ethereum account was sent to you via email.");
     } catch (err) {
-    	userNotify.notifyUser("Problem during ethereum account creation: " + err);
+      userNotify.notifyUser("Problem during ethereum account creation: " + err);
     }
 
   });
 }
 
-var unlockEthereumAccount = function(accountNr, passphrase, timeInSeconds) {
+var unlockEthereumAccount = function (accountNr, passphrase, timeInSeconds) {
   return web3.personal.unlockAccount(accountNr, passphrase, timeInSeconds);
 }
 
 
 /**
-  goes through all of the accounts that are known to the ethereum client and
-  checks if there is any ether on them. if no ethere is found then the account-file
-  will be delete.
-  Note: This was written for testing the application (if the money transaction failes the account is worthless...).
-  This function DOES NOT alter the account store information; if an account creation fails during the server is running
-  the user can currently not reset his account!
-**/
-EthereumAccountAdapter.prototype.cleanup = function(removeMinAccounts, userNotify) {
+ goes through all of the accounts that are known to the ethereum client and
+ checks if there is any ether on them. if no ethere is found then the account-file
+ will be delete.
+ Note: This was written for testing the application (if the money transaction failes the account is worthless...).
+ This function DOES NOT alter the account store information; if an account creation fails during the server is running
+ the user can currently not reset his account!
+ **/
+EthereumAccountAdapter.prototype.cleanup = function (removeMinAccounts, userNotify) {
 
   if (!accountFolder.endsWith('/')) {
-  	accountFolder += '/';
+    accountFolder += '/';
   }
 
   files = fs.readdirSync(accountFolder);
-  
-  files.forEach(function(file){
-      console.log('account file: ', file);
 
-      web3.eth.accounts.forEach(function(accountNr){
-        //console.log(accountNr);
+  files.forEach(function (file) {
+    console.log('account file: ', file);
 
-        //console.log(accountNr.substring(2, accountNr.length))
+    web3.eth.accounts.forEach(function (accountNr) {
+      //console.log(accountNr);
 
-        if (accountNr != null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0) {
-          var accountBalance = web3.eth.getBalance(accountNr);
+      //console.log(accountNr.substring(2, accountNr.length))
 
-          //console.log('account = ' + accountNr + ", balance = " + accountBalance);
-          //console.log('file path = ' + process.env.ACCOUNT_PATH);
+      if (accountNr != null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0) {
+        var accountBalance = web3.eth.getBalance(accountNr);
 
-          if (accountBalance == 0 || (removeMinAccounts && accountBalance == parseInt(process.env.INIT_ACCOUNT_MONEY))) {
-            console.log("delete empty account: " + accountFolder + file);
-            fs.unlinkSync(accountFolder + file);  
-          }
+        //console.log('account = ' + accountNr + ", balance = " + accountBalance);
+        //console.log('file path = ' + process.env.ACCOUNT_PATH);
+
+        if (accountBalance == 0 || (removeMinAccounts && accountBalance == parseInt(process.env.INIT_ACCOUNT_MONEY))) {
+          console.log("delete empty account: " + accountFolder + file);
+          fs.unlinkSync(accountFolder + file);
         }
-      });
-
-      //console.log('next file');
+      }
     });
+
+    //console.log('next file');
+  });
 
   userNotify.notifyUser('Accounts cleaned up!');
 }

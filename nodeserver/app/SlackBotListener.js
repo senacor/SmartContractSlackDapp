@@ -59,16 +59,16 @@ slack.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
       }
     }
     if (message.subtype && message.subtype == "channel_join") {
-        //slack.sendMessage('<@'+ message.user +'>, please execute the  ', message.channel);
+      //slack.sendMessage('<@'+ message.user +'>, please execute the  ', message.channel);
     }
     console.log('Message:', message);
     console.log('  >>UserId:', message.user);
     console.log('  >>UserName: ', slack.dataStore.users[message.user].profile.first_name + ' ' + slack.dataStore.users[message.user].profile.last_name);
     console.log('  >>UserEmail: ', slack.dataStore.users[message.user].profile.email);
-}
-catch (err) {
-  console.log("ERROR: ", err);
-}
+  }
+  catch (err) {
+    console.log("ERROR: ", err);
+  }
 
 });
 
