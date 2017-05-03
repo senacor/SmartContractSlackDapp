@@ -48,7 +48,6 @@ EthereumAccountStore.prototype.loadAccountInfoInFromSystem = function() {
 	var self = this;
 
 	lineReader.on('line', function (line) {
-	  console.log('Line from file:', line);
 		if (line.length > 3) {
 		  	try {
 		  		var loadedAccount = JSON.parse(line);

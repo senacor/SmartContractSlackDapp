@@ -17,45 +17,20 @@ var fs = require('fs');
 var contractAbiFilePath = process.env.CONTRACT_ABI_PATH;
 var contractAbiFile = process.env.CONTRACT_ABI_FILE;
 var contractABI = JSON.parse(fs.readFileSync(contractAbiFilePath + contractAbiFile, 'utf8'));
-//var contractABI = JSON.stringify(contractDefinitionFile);
 
 // init the election contract
 var lotteryContract = web3.eth.contract(contractABI);
 var lotteryContractAdr = process.env.CONTRACT_ADR;
 var lottery = null;
 
-//var addressToUserId = {};
-
 var userRegistrationEvent;
 
-//electionInst = election.at(process.env.CONTRACT_ADR);
-
 function EthereumLotteryAdapter() {
-
-	//console.log(minParticipationAmount);
-	//console.log(initialMoneyAmount);
 
 	if (lotteryContractAdr != undefined) {
 		lottery = lotteryContract.at(lotteryContractAdr);
 	}
-
-	//initContractEvents();
 }
-
-/*var initContractEvents() {
-
-	userRegistrationEvent = myContractInstance.UserRegistrationEvent(function(error, result){
-  		if (error) {
-  			console.log(error);
-  			return;
-  		}
-
-  		var address = result.user;
-  		var userId = addressToUserId[address];
-
-	});
-	
-}*/
 
 var checkLotteryInitialized = function(userNotify) {
 	if (lottery == undefined || lottery == null) {
@@ -198,9 +173,8 @@ EthereumLotteryAdapter.prototype.getParticipants = function(userNotify) {
 	var participants = lottery.getParticipants.call();
 	userNotify.notifyUser("Participant addresses: [" + participants + "]", 'no_user');
 
-	var participantsArr = participants; //JSON.parse(participants);
+	var participantsArr = participants; 
 
-	//var message = 'Slack user that participated: ';
 	for (i = 0; i < participantsArr.length; i++) {
 		var address = participantsArr[i];
 
@@ -211,8 +185,6 @@ EthereumLotteryAdapter.prototype.getParticipants = function(userNotify) {
 			userNotify.notifyUser('<@'+ userNotify.addressToUserId[address] +'>', 'no_user');
 		}
 	}
-
-	//userNotify.notifyUser(message);
 }
 
 var unlockEthereumAccount = function(adr, pwd, timeInSeconds) {
