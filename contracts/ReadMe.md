@@ -50,5 +50,6 @@ javascript test file:
 
 General note: The documentation of the used test-frameworks is horrible. Some things seem to be highly experimental. I could not understand certain behavior. The tests are by far NOT complete at the moment!
 
+## Deploy Contracts
 
-
+Type `truffle migrate` to run the deploy script at `migrations/1_deploy.js`, which will deploy `contracts/lottery/Lottery.sol` and all its dependencies.
