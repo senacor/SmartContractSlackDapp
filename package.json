@@ -5,17 +5,15 @@
   "repository": "https://github.com/senacor/SmartContractSlackDapp.git",
   "main": "index.js",
   "scripts": {
-    "build":  "node compile.js",
-    "test-dapple": "dapple test",
-    "test-js": "mocha",
-    "test": "npm run build && npm run test-js && npm run test-dapple"
+    "build": "truffle compile",
+    "test": "node runTests.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chaithereum": "2.0.x",
-    "mocha": "3.3.x",
+    "ethereumjs-testrpc": "^3.0.5",
     "solc": "0.4.x",
+    "truffle": "^3.2.1",
     "web3": "0.18.x"
   },
   "engine": {

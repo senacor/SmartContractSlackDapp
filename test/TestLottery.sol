@@ -1,12 +1,10 @@
 pragma solidity >= 0.4.5;
-import 'dapple/test.sol'; // virtual "dapple" package imported when `dapple test` is run
-import 'Lottery.sol';
-import 'LotteryEventDefinitions.sol';
+import 'truffle/Assert.sol';
+import "truffle/DeployedAddresses.sol";
+import '../contracts/lottery/Lottery.sol';
+import '../contracts/lottery/LotteryEventDefinitions.sol';
 
-// This is the dapple solidity testing; one writes test cases in ethereum; 
-// Naming convention: ContractName_test.sol
-// dapple tests should be in the same directory as the contract
-contract LotteryTest is Test, LotteryEventDefinitions {
+contract LotteryTest {
   Lottery lottery;
   Lottery lotteryWithInitialPot;
   Tester proxy_tester;
