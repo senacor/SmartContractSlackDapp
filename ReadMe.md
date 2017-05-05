@@ -115,4 +115,3 @@ For all commands see SlackMessageProcessor class.
 * exctend the functionality and add other contracts (new MessageProcessor and EthereumContract class + configuration parameters).
 * implement more persistence features, so we can store the account information etc.
 
-

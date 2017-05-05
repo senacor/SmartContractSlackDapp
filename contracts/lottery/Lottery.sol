@@ -1,5 +1,5 @@
 pragma solidity ^0.4.5;
-import 'LotteryEventDefinitions.sol';
+import './LotteryEventDefinitions.sol';
 
 contract Lottery is LotteryEventDefinitions {
     uint public pot; // the money that one can win
