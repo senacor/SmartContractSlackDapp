@@ -22,19 +22,7 @@ var accountFolder = process.env.ACCOUNT_FOLDER;
 var accountStore = new EthereumAccountStore();
 var accountPublisher = new EthereumAccountPublisher();
 
-//var self;
-
 function EthereumAccountAdapter() {
-
-  //this.initialMoneyAmount = parseInt(process.env.INIT_ACCOUNT_MONEY);
-  //this.adminAccountAddress = process.env.ADMIN_ACCOUNT_ADR;
-  //this.adminAccountPwd = process.env.ADMIN_ACCOUNT_PWD;
-  //this.accountFolder = process.env.ACCOUNT_FOLDER;
-
-  //this.accountStore = new EthereumAccountStore();
-  //this.accountPublisher = new EthereumAccountPublisher();
-
-  //self = this;
 
   // run check if the enviroment variables are checked
   if (initialMoneyAmount === undefined
@@ -88,7 +76,6 @@ EthereumAccountAdapter.prototype.getAccountBalanceInEtherByUserId = function (us
   } catch (err) {
     return err;
   }
-
 }
 
 EthereumAccountAdapter.prototype.getAdminBalanceInEther = function () {
@@ -104,11 +91,6 @@ var newEthereumAccount = function (_userNotify) {
   var pwdNewAccount = generatePassword();
   var userNotify = _userNotify;
 
-  // TODO: Go on here, work in the user notificaitonhandler and test it !!!
-  // if that works it will be nice!
-
-  //console.log(self.adminAccountAddress);
-
   rpcClient.call("personal_newAccount", [pwdNewAccount], function (err, result) {
     try {
       if (err != null) {
@@ -122,9 +104,6 @@ var newEthereumAccount = function (_userNotify) {
       userNotify.notifyUser("Ethereum account created!");
 
       console.log('Account created', accountAdr);
-
-      //console.log(self.adminAccountAddress);
-      console.log(adminAccountAddress);
 
       //transact money to account
       unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
@@ -169,15 +148,9 @@ EthereumAccountAdapter.prototype.cleanup = function (removeMinAccounts, userNoti
     console.log('account file: ', file);
 
     web3.eth.accounts.forEach(function (accountNr) {
-      //console.log(accountNr);
-
-      //console.log(accountNr.substring(2, accountNr.length))
 
       if (accountNr != null && file.indexOf(accountNr.substring(2, accountNr.length)) >= 0) {
         var accountBalance = web3.eth.getBalance(accountNr);
-
-        //console.log('account = ' + accountNr + ", balance = " + accountBalance);
-        //console.log('file path = ' + process.env.ACCOUNT_PATH);
 
         if (accountBalance == 0 || (removeMinAccounts && accountBalance == parseInt(process.env.INIT_ACCOUNT_MONEY))) {
           console.log("delete empty account: " + accountFolder + file);
@@ -185,8 +158,6 @@ EthereumAccountAdapter.prototype.cleanup = function (removeMinAccounts, userNoti
         }
       }
     });
-
-    //console.log('next file');
   });
 
   userNotify.notifyUser('Accounts cleaned up!');
