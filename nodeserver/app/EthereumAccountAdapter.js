@@ -107,7 +107,7 @@ var newEthereumAccount = function (_userNotify) {
 
       //transact money to account
       unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
-      web3.eth.sendTransaction({from: adminAccountAddress, to: accountAdr, value: initialMoneyAmount, gas: 4000000});
+      web3.eth.sendTransaction({from: adminAccountAddress, to: accountAdr, value: initialMoneyAmount, gas: 2000000});
 
       // remember account information
       accountStore.storeAccountInfoInMemory(userId, "Anonymous", accountAdr, pwdNewAccount);

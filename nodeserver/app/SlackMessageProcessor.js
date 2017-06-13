@@ -103,6 +103,14 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
   // check for known commands
   switch (mText) {
+    case 'how to reset':
+      if (checkAdmin(userNotify)) {
+        userNotify.notifyUser("for standard reset (using the defaults from .env file) you can call: standard reset");
+        userNotify.notifyUser("customized reset is called like this: reset {minAmount_in_wei,initAmount_in_wei}");
+      }
+
+      return;
+
     case 'turn on create':
     case 'turn on create account':
       if (checkAdmin(userNotify)) {
@@ -182,6 +190,20 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
 
         var minAmount = mParams[0];
         var initAmount = mParams[1];
+
+        this.lotteryAdapter.resetLottery(minAmount, initAmount, userNotify);
+      }
+      return;
+
+    case 'standard reset':
+    case 'reset standard':
+    case 'standard lottery reset':
+    case 'standard reset lottery':
+    case 'reset lottery standard':
+      if (checkAdmin(userNotify)) {
+
+        var minAmount = process.env.DEFAULT_MIN_AMOUNT_LOTTERY;
+        var initAmount = process.env.DEFAULT_INIT_AMOUNT_LOTTERY;
 
         this.lotteryAdapter.resetLottery(minAmount, initAmount, userNotify);
       }
