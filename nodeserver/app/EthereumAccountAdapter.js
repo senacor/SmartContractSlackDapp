@@ -111,7 +111,11 @@ var newEthereumAccount = function (_userNotify) {
 
       // remember account information
       accountStore.storeAccountInfoInMemory(userId, "Anonymous", accountAdr, pwdNewAccount);
-      accountStore.storeAccountInfoInFileSystem(userId, "Anonymous", accountAdr, pwdNewAccount);
+      try {
+        accountStore.storeAccountInfoInFileSystem(userId, "Anonymous", accountAdr, pwdNewAccount);
+      } catch (err) {
+        userNotify.notifyUser("Was not able to create savecopy of account credentials: " + err);
+      }
 
       // send newly created account to the user via email (saver than via slack...)
       accountPublisher.publishAccountViaEmail(userEmail, accountAdr, pwdNewAccount);

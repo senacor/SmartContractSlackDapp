@@ -98,6 +98,7 @@ contract Lottery is LotteryEventDefinitions {
         if (winner == msg.sender) {
             if (winner.send(pot)) {
                 pot = 0;
+                winner = address(0); 
                 WinnerTookItAll("The winner withdrew the the pot successfully. Buy your friends a beer mate!");
             } else {
                 WinnerFailedToTakeWin("Wooops, something went wrong, the winner was not able to withdrw his funds. Sorry dude, that was not planned.");

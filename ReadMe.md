@@ -11,17 +11,20 @@
 You need some ethereum client. We used geth (go-Ethereum) for our setup. The following geth versions were used:
 
 * 1.6.0 (stable)
+* 1.6.5 (stable)
 
 Downloads for alls OS are on the [geth-website](https://launchpad.net/~ethereum/+archive/ubuntu/ethereum). There is also a [launchpad projekt](https://launchpad.net/~ethereum/+archive/ubuntu/ethereum) for deb-packages (Debian/Ubuntu) systems. You can even install the langauge compiler for solidity: solc.
 
 It is recommended that you sync and test with the testnet (04/2017: ropsten) before you deploy anything to the productive chain.
 In case ropsten is not working, there is a more stable testnet named [kovan](https://github.com/kovan-testnet/proposal) with a PoA instead of an PoW.
 
-Start geth for the first sync:
+Start geth for the first sync (or the rinkeby-testnet):
 		
-	geth --testnet --fast console
+	geth --rinkeby console
 
-Note that you need an "admin" account that holds the initial amount of ether that will be distributed to the accounts created for your users through slack-chat. You should be familiar with using Ethereum and the Ethereum client of your choice. We will define the commands for startup and RPC-API-exposure for geth. If you chose to use another client you will have to deal have to deal with the setup and startup by yourself.
+Note that there is also ```--testnet``` as testnet parameter; but this parameter currently still points to the ropsten testnet. We use the rinkeby testnet for our setup. The rinkeby testnet is proof-of-authority base, so you will have to use the ether-faucet to retrieve test-ether.
+
+Note that you need an "admin" account that holds the initial amount of ether that will be distributed to the accounts created for your users through slack-chat. You should be familiar with using Ethereum and the Ethereum client of your choice. We will define the commands for startup and RPC-API-exposure for geth. If you chose to use another client you will have to deal with the setup and startup by yourself.
 
 
 ### Setup Slack
@@ -44,6 +47,7 @@ The setup was tested with nodejs:
 * v6.9.1 on Windows
 * v6.10.2 on Linux (Debian)
 * v7.2.0 on Linux (Ubuntu)
+* v6.11.0 on Linux (lUbuntu)
 
 ### Setup Testframeworks (optional...)
 
@@ -51,8 +55,10 @@ For testing solidity-contracts you can used the following Ethereum test-framewor
 
 * dapple (tests written in solidity)
 * mocha + chaithereum (tests written in javascript running through web3)
+* testrpc (together with truffle)
 
 We used dapple to test our contracts (see the _test files in the contract directory).
+Truffle support will be added in the next version.
 
 ## Run the program
 
@@ -60,7 +66,7 @@ We used dapple to test our contracts (see the _test files in the contract direct
 
 start geth like this:
 		
-	geth [--testnet] console
+	geth [--rinkeby] console
 
 #### Expose the RPC on geth client
 Once the Javascript console of geth appears you have to expose the the RPC interface.
