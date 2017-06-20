@@ -1,5 +1,5 @@
 pragma solidity ^0.4.5;
-import 'LotteryEventDefinitions.sol';
+import './LotteryEventDefinitions.sol';
 
 contract Lottery is LotteryEventDefinitions {
     uint public pot; // the money that one can win
@@ -32,7 +32,7 @@ contract Lottery is LotteryEventDefinitions {
         else { throw; }
     }
 
-    modifier insufficientFunds() {
+    modifier sufficientFunds() {
         if (msg.value < minimumStakeInWei) { throw; }
         else { _; }
     }
@@ -73,7 +73,7 @@ contract Lottery is LotteryEventDefinitions {
         pot = msg.value;
     }
 
-    function placeBets() payable insufficientFunds gameOngoing {
+    function placeBets() payable sufficientFunds gameOngoing {
         pot += msg.value;
         participants.push(msg.sender);
         UserPutBets(msg.sender, pot);
@@ -85,8 +85,8 @@ contract Lottery is LotteryEventDefinitions {
             return;
         }
 
-    	// not very good random, but better than nothing at the moment.
-    	uint randWinAddr = uint(block.blockhash(block.number - 1)) % participants.length;
+        // not very good random, but better than nothing at the moment.
+        uint randWinAddr = uint(block.blockhash(block.number - 1)) % participants.length;
         winner = participants[randWinAddr];
 
         gameClosed = true;
@@ -98,7 +98,7 @@ contract Lottery is LotteryEventDefinitions {
         if (winner == msg.sender) {
             if (winner.send(pot)) {
                 pot = 0;
-                winner = address(0); 
+                winner = address(0);
                 WinnerTookItAll("The winner withdrew the the pot successfully. Buy your friends a beer mate!");
             } else {
                 WinnerFailedToTakeWin("Wooops, something went wrong, the winner was not able to withdrw his funds. Sorry dude, that was not planned.");
@@ -122,27 +122,27 @@ contract Lottery is LotteryEventDefinitions {
 
     /** -------- GETTER -------- **/
 
-    function getWinner() returns (address) {
+    function getWinner() constant returns (address) {
         return winner;
     }
 
-    function getParticipants() returns (address[]) {
+    function getParticipants() constant returns (address[]) {
         return participants;
     }
 
-    function getNrOfParticipants() returns (uint) {
+    function getNrOfParticipants() constant returns (uint) {
         return participants.length;
     }
 
-    function getPot() returns(uint) {
+    function getPot() constant returns(uint) {
         return pot;
     }
 
-    function getMinimumStakeInWei() returns (uint) {
+    function getMinimumStakeInWei() constant returns (uint) {
         return minimumStakeInWei;
     }
 
-    function isGameClosed() returns (bool) {
+    function isGameClosed() constant returns (bool) {
         return gameClosed;
     }
 }

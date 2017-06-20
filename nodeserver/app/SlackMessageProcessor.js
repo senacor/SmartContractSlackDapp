@@ -276,6 +276,13 @@ SlackMessageProcessor.prototype.processSlackBotMessage = function (message, user
       }
       return;
 
+    case 'rescue':
+    case 'rescue initial amount':
+      if (checkAdmin(userNotify)) {
+        this.lotteryAdapter.rescueInitialAmountIfNobodyPlayed(userNotify);
+      }
+      return;
+
     default:
       userNotify.notifyUser('Sorry, I did not understand you - are you sure you did not misspell?');
 

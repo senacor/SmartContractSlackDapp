@@ -127,6 +127,16 @@ EthereumLotteryAdapter.prototype.endLottery = function (userNotify) {
     'no_user');
 }
 
+EthereumLotteryAdapter.prototype.rescueInitialAmountIfNobodyPlayed = function(userNotify) {
+  checkLotteryInitialized(userNotify);
+  checkAdmin(userNotify);
+
+  unlockEthereumAccount(adminAccountAddress, adminAccountPwd, 1200);
+  var transNo = lottery.rescueInitialAmountIfNobodyPlayed.sendTransaction(0, {from: adminAccountAddress});
+  userNotify.notifyUser("The admin tries to take the inital amount, because nobody played, transaction: " + transNo,
+    'no_user');
+}
+
 EthereumLotteryAdapter.prototype.transferPotToWinner = function (userNotify) {
   checkLotteryInitialized(userNotify);
 
@@ -148,6 +158,12 @@ EthereumLotteryAdapter.prototype.getWinner = function (userNotify) {
   checkLotteryInitialized(userNotify);
 
   var winnerAdr = lottery.getWinner.call();
+
+  if (winnerAdr == "0x" || winnerAdr == "0x0000000000000000000000000000000000000000") {
+    userNotify.notifyUser("No winner yet! Did the admin end the lottery yet?");
+    return;
+  }
+
   console.log("MAPPING: " + userNotify.addressToUserId);
   console.log("WINNERADR:" + winnerAdr);
 
@@ -155,8 +171,8 @@ EthereumLotteryAdapter.prototype.getWinner = function (userNotify) {
 
   userNotify.notifyUser("THE WINNER IS: <@" + winnerUserId + ">", 'no_user');
   userNotify.notifyUser("THE WINNER-ADDRESS IS: " + winnerAdr, 'no_user');
-  userNotify.notifyUser("You transmit the winning-pot to your account by executing the 'gimme my money' command!", winnerUserId);
-  userNotify.notifyUser("Hey, its me again. Just wanted to tell you that 'withdraw' also works, but I personally like 'gimme my money' better.", winnerUserId);
+  userNotify.notifyUser("Transmit the winning-pot to your account by executing the 'gimme my money' command!", 'no_user');
+  userNotify.notifyUser("Hey, its me again. Just wanted to tell you that 'withdraw' also works, but I personally like 'gimme my money' better.", 'no_user');
 }
 
 EthereumLotteryAdapter.prototype.getPot = function (userNotify) {
