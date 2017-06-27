@@ -5,6 +5,4 @@
 nodeserver/app/.env
 
 # ignore generated test resources
-contracts/lottery/.dapple
-contracts/lottery/generated
-contracts/lottery/build
+smart-contract/lottery/build
