@@ -43,6 +43,10 @@ For now we switched to truffle for testing.
 
 ### Run the tests
 
+Make sure to start the testrpc in a separate terminal by running the command:
+
+```testrpc``` 
+
 To run the test make sure you navigated into the current folder (```smart-contract/lottery```) folder in your terminal. Then run the command:
 
 ```
