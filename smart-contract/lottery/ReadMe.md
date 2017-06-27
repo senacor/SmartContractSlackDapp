@@ -7,48 +7,59 @@ The lottery is a simple contract that allows users to send money to the contract
 The admin has to end the lottery (a time base version could be implemented too, this version is based on ending the lottery by admin user). 
 Once the admin ends the lottery a winner will be picked ('randomly' by current blocknumber).
 
-Once the winner was picked only the winner will be able to to transfer the pot (money in contract) to his account by calling a transfer funcion.
+Once the winner was picked only the winner is able to to transfer the pot (money in contract) to his account by calling a transfer funcion.
+For details please check the ```Lottery.sol``` contract file located in the ```contracts``` folder. The contract methods should be self-explanatory.
 
-For details please check the Lottery.sol contract file. The contract methods should be self-explanatory.
+The contract-project was setup according to the specification of the [truffle framework](http://truffleframework.com/docs/). 
 
-### The setup
+## contracts and migrations
 
-You need two frameworks setup for testing the lottery contract:
+The ```contracts``` folder contains the ```Lottery.sol``` contract file as well as two more files:
 
-* [dapple](https://github.com/dapphub/dapple)
-* javacsript (mocha + chaithereum)
+1. ```LotteryEventDefinitions.sol``` contains the event definitions of all the events used by the ```Lottery.sol``` contract.
+2. ```Migrations.sol``` is a contract provided by the truffle framework that manages the deployments of the ```Lottery.sol``` contract.
 
-## Run the tests
+The ```migrations``` folder contains the migration scrips according to the truffle specification. 
 
-To run the dapple tests: 
+Please check the [truffle documentation](http://truffleframework.com/docs/) for more details.
 
-	dapple test
+## Test setup
 
-To run the javascript tests:
+The tests for the lottery contract are located in the ```test``` folder.
 
-	npm install (only once)
-	npm run test-js
+There are 2 kinds of tests available:
 
-Note: You can run all tests using the command:
+1. Tests written in javascript (using Mocha)
+2. Tests written in Solidity 
 
-	npm install (only once)
-	npm run test
+Both tests-styles were used according to the truffle specification. 
+
+***It is recommended to focus on the [tests written in javascirpt](https://github.com/senacor/SmartContractSlackDapp/blob/master/smart-contract/lottery/test/lottery.js).***
+
+The tests written in solidity are far from being complete. This is because the documentation on writing solidity tests in truffle is really bad. There are very few examples out there. 
+Previously we used [dapple](http://dapple.readthedocs.io/en/latest/) for writing tests in solidity; however it seemed dapple is not maintained any more. Features that were requested over a year ago were not worked into the framework. Recently dapple was moved to a new project called [Dapp](https://dapp.readthedocs.io/en/latest/). Further investigation will be needed to evaluate if it is powerful enough for complete tests.
+For now we switched to truffle for testing.
+
+
+### Run the tests
+
+To run the test make sure you navigated into the ```[smart-contract/lottery](https://github.com/senacor/SmartContractSlackDapp/tree/master/smart-contract/lottery)``` folder. Then run the command:
+
+```
+truffle test
+```
+
+Since running the tests includes compiling the contract(s), you don't have to run ```truffle compile``` first - but you can if you want.
+
 
 ## Most important files:
 
-Lottery Contract file (solidity):
+lottery Contract file (solidity): ```./contracts/Lottery.sol```
 
-	./src/Lottery.sol
+javascript test file: ```./test/lottery.js```
 
-dapple test file:
+solidity test file: ```./test/TestLottery.sol```
 
-	./src/Lottery_test.sol
-
-javascript test file:
-
-	./test/Lottery.js
-
-General note: The documentation of the used test-frameworks is horrible. Some things seem to be highly experimental. I could not understand certain behavior. The tests are by far NOT complete at the moment!
 
 
 
