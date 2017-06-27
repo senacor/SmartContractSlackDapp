@@ -43,7 +43,7 @@ For now we switched to truffle for testing.
 
 ### Run the tests
 
-To run the test make sure you navigated into the ```[smart-contract/lottery](https://github.com/senacor/SmartContractSlackDapp/tree/master/smart-contract/lottery)``` folder. Then run the command:
+To run the test make sure you navigated into the current folder (```smart-contract/lottery```) folder in your terminal. Then run the command:
 
 ```
 truffle test
