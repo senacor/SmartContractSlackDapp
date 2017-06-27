@@ -53,9 +53,9 @@ The setup was tested with nodejs:
 
 For testing solidity-contracts you can used the following Ethereum test-frameworks:
 
-* --dapple (tests written in solidity)--
-* --mocha + chaithereum (tests written in javascript running through web3)--
-* testrpc together with truffle
+* ~~dapple (tests written in solidity)~~
+* ~~mocha + chaithereum (tests written in javascript running through web3)~~
+* testrpc together with truffle and mocha
 
 Contract-Testing is currently done using the truffle framework. Please check the [readme file in the contract folder](https://github.com/senacor/SmartContractSlackDapp/tree/master/smart-contract/lottery) for details.
 
