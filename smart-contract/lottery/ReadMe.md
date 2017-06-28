@@ -7,8 +7,12 @@ The lottery is a simple contract that allows users to send money to the contract
 The admin has to end the lottery (a time base version could be implemented too, this version is based on ending the lottery by admin user). 
 Once the admin ends the lottery a winner will be picked ('randomly' by current blocknumber).
 
-Once the winner was picked only the winner is able to to transfer the pot (money in contract) to his account by calling a transfer funcion.
+Once the winner was picked only the winner is able to to transfer the pot (money in contract) to his account by calling a transfer funcion. 
+After the game was ended and the winner took the funds the admin can reset the lottery and one can play again. 
+
 For details please check the ```Lottery.sol``` contract file located in the ```contracts``` folder. The contract methods should be self-explanatory.
+
+Note that picking a winner is not "secure random", but just according to the current block-hash. The lottery contract is a simple example to show how smart contracts work. If you are interested in introducing RNG into a smart contract you can take a look at the [RanDAO](https://github.com/randao/randao).
 
 The contract-project was setup according to the specification of the [truffle framework](http://truffleframework.com/docs/). 
 
