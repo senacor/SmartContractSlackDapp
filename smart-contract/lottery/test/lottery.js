@@ -62,12 +62,14 @@ contract('Lottery', function(accounts) {
 
       it("should init the game-closed correctly" , function(){
         return lot.isGameClosed.call().then(function(actual) {
-            // -----------------------------------------------------------------------------------------
-            // CHECK IF LOTTREY WAS INITIALIZED CORRECTLY
-            testInitializationOfLottery();
+            assert.equal(actual, false, "game closed was not initialized correctly")
           });
       });
     }
+
+    // -----------------------------------------------------------------------------------------
+    // CHECK IF LOTTREY WAS INITIALIZED CORRECTLY
+    testInitializationOfLottery();
     
 
     // -----------------------------------------------------------------------------------------
@@ -158,12 +160,13 @@ contract('Lottery', function(accounts) {
       it("should reset the lottery if the admin resets it", function() {
         return lot.resetLottery(minStake, {from: admin, value: initPot}).then(function() {
           // nothing to assert here, the assertions will be done in the test init function below
+          testInitializationOfLottery();
         });
       });
 
     });
 
-    testInitializationOfLottery();
+    
   });
 });
 
