@@ -12,6 +12,7 @@ You need some ethereum client. We used geth (go-Ethereum) for our setup. The fol
 
 * 1.6.0 (stable)
 * 1.6.5 (stable)
+* 1.7.0 (stable)
 
 Downloads for alls OS are on the [geth-website](https://launchpad.net/~ethereum/+archive/ubuntu/ethereum). There is also a [launchpad projekt](https://launchpad.net/~ethereum/+archive/ubuntu/ethereum) for deb-packages (Debian/Ubuntu) systems. You can even install the langauge compiler for solidity: solc.
 
