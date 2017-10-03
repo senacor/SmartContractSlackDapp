@@ -5,10 +5,8 @@ contract LotteryEventDefinitions {
     event LotteryEnd(address winner);
     event UserPutBets(address user, uint currentPot);
 
-	event WinnerTookItAll(string msg);
-    event WinnerFailedToTakeWin(string msg);
-    event SomeGuyTriedToTakeTheWinnings(string msg, address someGuy);
-    //event GameNotOverYet(string msg);
-    // event ThePotIsEmpty(string msg);
-    event NobodyPlayedWithdrewInitialAmount(string msg);
+	event WinnerTookItAll(string message);
+    event WinnerFailedToTakeWin(string message);
+    event SomeGuyTriedToTakeTheWinnings(string message, address someGuy);
+    event NobodyPlayedWithdrewInitialAmount(string message);
 }

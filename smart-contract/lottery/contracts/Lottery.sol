@@ -7,8 +7,6 @@ contract Lottery is LotteryEventDefinitions {
     address[] public participants; // the addreses of the participants that place bets
     address public winner; // the winner (will be chosen upon ending the lottery)
 
-    // TODO: If there is still time then work on the registration functionality.
-
     // 1 ether = 1000000000000000000 wei
     uint public minimumStakeInWei;
     bool public gameClosed = false;
@@ -18,7 +16,7 @@ contract Lottery is LotteryEventDefinitions {
     /* one can pass money initially to set an initial pot. */
     function Lottery (
         uint minStakeInWei
-    ) payable {
+    ) public payable {
         pot = msg.value;
         minimumStakeInWei = minStakeInWei;
         admin = msg.sender;
@@ -28,58 +26,52 @@ contract Lottery is LotteryEventDefinitions {
     /** -------- MODIFIERS -------- **/
 
     modifier adminOnly() {
-        if (msg.sender == admin) { _; } 
-        else { throw; }
+        require(msg.sender == admin);
+        _;
     }
 
+    /** Note: old throw syntax in this modifier **/
     modifier sufficientFunds() {
         if (msg.value < minimumStakeInWei) { throw; }
         else { _; }
     }
 
     modifier gameOngoing() {
-        if (gameClosed) { throw; }
-        else { _; }
+        require(!gameClosed);
+        _;
     }
 
     modifier afterGameClosed() {
-        // check if the deadline was already reached.
-        if (gameClosed) { _; } 
-        else { 
-            //GameNotOverYet("The game lottery was not ended yet. Only the admin can end the lottery.");
-            throw; 
-        }
+        require(gameClosed);
+        _;
     }
 
     modifier winningConstraints() {
-        if (pot != 0 && participants.length > 0) { _; } 
-        else {
-            //ThePotIsEmpty("Nothing to withdraw!");
-            throw;
-        }
+        require(pot != 0 && participants.length > 0);
+        _;
     }
 
     modifier winnerTookPot() {
-        if (pot == 0) { _; }
-        else { throw; }
+        require(pot == 0);
+        _;
     }
 
     /** -------- FUNCTIONS -------- **/
 
-    function resetLottery(uint _minimumStakeInWei) payable adminOnly afterGameClosed winnerTookPot {
+    function resetLottery(uint _minimumStakeInWei) public payable adminOnly afterGameClosed winnerTookPot {
         participants.length = 0;
         minimumStakeInWei = _minimumStakeInWei;
         gameClosed = false;
         pot = msg.value;
     }
 
-    function placeBets() payable sufficientFunds gameOngoing {
+    function placeBets() public payable sufficientFunds gameOngoing {
         pot += msg.value;
         participants.push(msg.sender);
         UserPutBets(msg.sender, pot);
     }
 
-    function endLottery() adminOnly {
+    function endLottery() public adminOnly {
         if (participants.length == 0) {
             gameClosed = true;
             return;
@@ -94,7 +86,7 @@ contract Lottery is LotteryEventDefinitions {
         LotteryEnd(winner);
     }
 
-    function transferPotToWinner() afterGameClosed winningConstraints {
+    function transferPotToWinner() public afterGameClosed winningConstraints {
         if (winner == msg.sender) {
             if (winner.send(pot)) {
                 pot = 0;
@@ -110,8 +102,8 @@ contract Lottery is LotteryEventDefinitions {
 
     /* This function can only be called by the owner of the contract.
     The owner can only withdraw the pot if nobody played and the deadline has passed. */
-    function rescueInitialAmountIfNobodyPlayed() adminOnly afterGameClosed {
-        if (participants.length > 0) throw;
+    function rescueInitialAmountIfNobodyPlayed() public adminOnly afterGameClosed {
+        require(participants.length == 0);
 
         if (admin.send(pot)) {
             pot = 0;
@@ -122,27 +114,27 @@ contract Lottery is LotteryEventDefinitions {
 
     /** -------- GETTER -------- **/
 
-    function getWinner() constant returns (address) {
+    function getWinner() public constant returns (address) {
         return winner;
     }
 
-    function getParticipants() constant returns (address[]) {
+    function getParticipants() public constant returns (address[]) {
         return participants;
     }
 
-    function getNrOfParticipants() constant returns (uint) {
+    function getNrOfParticipants() public constant returns (uint) {
         return participants.length;
     }
 
-    function getPot() constant returns(uint) {
+    function getPot() public constant returns(uint) {
         return pot;
     }
 
-    function getMinimumStakeInWei() constant returns (uint) {
+    function getMinimumStakeInWei() public constant returns (uint) {
         return minimumStakeInWei;
     }
 
-    function isGameClosed() constant returns (bool) {
+    function isGameClosed() public constant returns (bool) {
         return gameClosed;
     }
 }
